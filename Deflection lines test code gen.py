@@ -3,8 +3,8 @@ import os
 
 # Key vars
 cutterDiameter = 3.175 # mm ALWAYS SPEC AT LEAST 1 DP, even if 0 as convention, as a measure to catch the imperial accuracies
-depthOfCut = 4 # mm 
-spindleSpeed = 23000 # RPM
+depthOfCut = 6 # mm 
+spindleSpeed = 22000 # RPM
 minFeed = 5000 # mm/min
 maxFeed = 8000 # mm/min
 numberOfFeeds = 4
@@ -24,7 +24,7 @@ trenchesPerFeed = 3
 # Calculated variables
 fileName = fileFolder + "/" + fileName
 if appendFeedsToFileName:    
-    fileName = fileName[:len(fileName)-6] + " ø" + str(cutterDiameter) + " " + str(minFeed//1000) + "-" + str(maxFeed//1000) + "k.gcode"
+    fileName = fileName[:len(fileName)-6] + " ø" + str(cutterDiameter) + " " + str(minFeed//1000) + "-" + str(maxFeed//1000) + "k " + str(depthOfCut) + "deep.gcode"
 feedIncrement = ((maxFeed-minFeed)//(numberOfFeeds-1))
 feeds = list(range(minFeed,maxFeed+1,feedIncrement))
 print(feeds)
