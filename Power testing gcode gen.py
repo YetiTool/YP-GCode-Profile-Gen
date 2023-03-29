@@ -1,9 +1,8 @@
 #User defined variables
-fileName = 'half depth Power testing.gcode'
+fileName = 'Power testing.gcode'
 fileFolder = 'Latest'
 cutterDiameter = 3 #mm
-depthOfCut = 3
- #mm 
+depthOfCut = 3 #mm 
 plungeSpeed = 250 #mm/min
 nominalTrenchGap = 5 #mm
 numberOfTrenches = 6
