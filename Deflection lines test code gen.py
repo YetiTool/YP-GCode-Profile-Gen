@@ -1,15 +1,15 @@
 import shutil
 import os
 
-#Key vars
-cutterDiameter = 8.0 # mm
+# Key vars
+cutterDiameter = 3.175 # mm ALWAYS SPEC AT LEAST 1 DP, even if 0 as convention, as a measure to catch the imperial accuracies
 depthOfCut = 4 # mm 
 spindleSpeed = 23000 # RPM
-minFeed = 1000 # mm/min
-maxFeed = 4000 # mm/min
+minFeed = 5000 # mm/min
+maxFeed = 8000 # mm/min
 numberOfFeeds = 4
 
-#Standard vars
+# Standard vars
 fileName = 'Def.gcode'
 fileFolder = 'Latest'
 verificationDepth = 1 # mm
@@ -51,11 +51,12 @@ def moveOver(dimension, feed):
     return gcode
 
     
-#Write GCODE file
+# Write GCODE file
 with open(fileName,"w+") as f:
+
     gcode = ""
     trench = 1
-    #MAIN CUT
+    # MAIN CUT
     gcode = addLine(gcode, "G90G0 Z2") # Lift Z    
     gcode = addLine(gcode, "M3 S" + str(spindleSpeed)) #Start spindle
     gcode = addLine(gcode, "G90G0 X-5Y-5\nG90G0 Z-1\nG90G0 X0Y0") # Ident test-start AND remove backlash
@@ -85,10 +86,7 @@ with open(fileName,"w+") as f:
         gap = (nominalTrenchGap + cutterDiameter) * trench
         gcode = addLine(gcode, moveOver(gap, feed)) #Move over  
         trench += 1
-
         gcode = addLine(gcode, "G90G0 X0") #Rtn to X start 
-
-               
 
     if (cutVerificationLine):    
         #VERIFICATION LINE
@@ -106,7 +104,7 @@ with open(fileName,"w+") as f:
     gcode = addLine(gcode, "G90G0 Z2") #Lift Z    
     gcode = addLine(gcode, "M5") #Stop spindle
     f.write(gcode)
-f.close()
 
+f.close()
 print(fileName + " written")
 
