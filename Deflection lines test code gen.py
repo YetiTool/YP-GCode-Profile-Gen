@@ -2,8 +2,8 @@ import shutil
 import os
 
 # Key vars
-cutterDiameter = 3.175 # mm ALWAYS SPEC AT LEAST 1 DP, even if 0 as convention, as a measure to catch the imperial accuracies
-depthOfCut = 6 # mm 
+cutterDiameter = 8.0 # mm ALWAYS SPEC AT LEAST 1 DP, even if 0 as convention, as a measure to catch the imperial accuracies
+depthOfCut = 4 # mm 
 spindleSpeed = 22000 # RPM
 minFeed = 5000 # mm/min
 maxFeed = 8000 # mm/min

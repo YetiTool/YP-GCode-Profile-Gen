@@ -1,19 +1,19 @@
 #User defined variables
 fileName = 'Power testing.gcode'
 fileFolder = 'Latest'
-cutterDiameter = 3 #mm
-depthOfCut = 3 #mm 
+cutterDiameter = 8 #mm
+depthOfCut = 4 #mm 
 plungeSpeed = 250 #mm/min
 nominalTrenchGap = 5 #mm
 numberOfTrenches = 6
-trenchLength = 1200 #mm
-spindleSpeed = 19000 #RPM
-feed = 4000 #mm/min
-appendSeedToFile = True #True or False
+trenchLength = 950 #mm
+spindleSpeed = 22000 #RPM
+feed = 5000 #mm/min
+appendFeedToFile = True #True or False
 
 #Calculated variables
 fileName = fileFolder + "/" + fileName
-if appendSeedToFile:    
+if appendFeedToFile:    
     fileName = fileName[:len(fileName)-6] + " " + str(spindleSpeed//1000) + "k.gcode"
 gapBetweenLines = nominalTrenchGap + cutterDiameter
 
