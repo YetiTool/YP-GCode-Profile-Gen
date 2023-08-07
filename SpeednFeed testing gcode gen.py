@@ -63,6 +63,7 @@ def moveOverTo(trenchNumber, nominalTrenchGap, cutterDiameter):
 #Write GCODE file
 with open(fileName,"w+") as f:
     f.write("*LFFFFFF")
+    f.write("M3 S" + minSpindleSpeed)
     f.write("G90\nG0X0Z0\n")
     #Loop through feed segments
     for segment in range(numberOfFeedTrenches):
