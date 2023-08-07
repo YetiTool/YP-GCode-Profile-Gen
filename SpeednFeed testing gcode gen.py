@@ -1,34 +1,45 @@
 #User defined variables
-fileName = 'SpeedNFeed testing.gcode'
+fileName = 'SNF test.gcode'
 fileFolder = 'Latest'
-cutterDiameter = 3 #mm
+cutterDiameter = 6 #mm
 depthOfCut = 3 #mm 
 plungeSpeed = 250 #mm/min
 nominalTrenchGap = 5 #mm
-numberOfTrenches = 5
-markerSize = 2 #mm
-trenchLength = 1200 #mm
+markerSize = cutterDiameter/2 #mm
+trenchLength = 900 #mm
 numberOfSpeedSegments = 5
 minSpindleSpeed = 15000 #RPM
 maxSpindleSpeed = 23000 #RPM
-minFeed = 1000 #mm/min
+minFeed = 2000 #mm/min
 maxFeed = 8000 #mm/min
-numberOfFeedTrenches = 8
+numberOfFeedTrenches = 4
 appendFeedsToFile = True #True or false
+compensateCutterDiameter = True #True or false
 
 #Calculated variables
 fileName = fileFolder + "/" + fileName
 if appendFeedsToFile:    
-    fileName = fileName[:len(fileName)-6] + " " + str(minFeed//1000) + "-" + str(maxFeed//1000) + "k.gcode"
+    fileName = fileName[:len(fileName)-6] + " " + str(minFeed//1000) + "-" + str(maxFeed//1000) + "k, " + str(minSpindleSpeed//1000) + "-" + str(maxSpindleSpeed//1000) + "k.gcode"
 gapBetweenLines = nominalTrenchGap + cutterDiameter
 speedSegmentLength = trenchLength / numberOfSpeedSegments
 speedRange = list(range(minSpindleSpeed, maxSpindleSpeed+1, int((maxSpindleSpeed-minSpindleSpeed)/(numberOfSpeedSegments-1))))
 speedRange.insert(0, minSpindleSpeed)
-positionRange = list(range(0, trenchLength+1, int(trenchLength/(numberOfSpeedSegments))))
-feedRange = list(range(minFeed, maxFeed+1, int((maxFeed-minFeed)/(numberOfFeedTrenches-1))))
 
+feedRange = list(range(minFeed, maxFeed+1, int((maxFeed-minFeed)/(numberOfFeedTrenches-1))))
+halfCutterDiameter = cutterDiameter/2
+
+if compensateCutterDiameter:
+    sectionLength = (trenchLength - halfCutterDiameter) / numberOfSpeedSegments
+    positionRange = []
+    for i in range(numberOfSpeedSegments+1):
+        positionRange.append(round(sectionLength*i, 1))
+    positionRange[0] = halfCutterDiameter
+else:
+    positionRange = list(range(0, trenchLength+1, int(trenchLength/(numberOfSpeedSegments))))
+    
 print(feedRange)
 print(speedRange[1:])
+
 
 def cutTrench(cutFeed, positionRange, speedRange, minSpindleSpeed, depthOfCut, plungeSpeed):
     cutFeed = str(cutFeed)
