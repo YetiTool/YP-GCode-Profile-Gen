@@ -1,7 +1,7 @@
 #User defined variables
 fileName = 'Power testing.gcode'
 fileFolder = 'Latest'
-cutterDiameter = 64 #mm
+cutterDiameter = 6 #mm
 depthOfCut = 5 #mm 
 plungeSpeed = 250 #mm/min
 nominalTrenchGap = 5 #mm
@@ -44,6 +44,7 @@ with open(fileName,"w+") as f:
     gcode = ""
     #MAIN CUT
     direction = 0
+    gcode = addLine(gcode, "*LFFFFFF") #White because filming
     gcode = addLine(gcode, "M3 S" + str(spindleSpeed) + "\nG90G0 X-5Y-5Z-2\nG90G0 X0Y0Z0") #Start spindle AND remove backlash
     gcode = addLine(gcode, "G90G0 X" + str(cutterDiameter/2)) #Move up to half cutter diameter
     gcode = addLine(gcode, "G90G1 Z" + str(-1*depthOfCut) + "F" + str(plungeSpeed)) # Plunge Z  
