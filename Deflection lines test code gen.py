@@ -8,6 +8,7 @@ spindleSpeed = 23000 # RPM
 minFeed = 2000 # mm/min
 maxFeed = 6000 # mm/min
 numberOfFeeds = 3
+safeDistance = 5 #mm
 
 #Standard vars
 fileName = 'Def.gcode'
@@ -57,7 +58,7 @@ with open(fileName,"w+") as f:
     trench = 1
     #MAIN CUT
     gcode = addLine(gcode, "*LEA00FF") #Magenta because it's cute
-    gcode = addLine(gcode, "G90G0 Z2") # Lift Z    
+    gcode = addLine(gcode, "G90G0 Z" + str(safeDistance)) # Lift Z    
     gcode = addLine(gcode, "M3 S" + str(spindleSpeed)) #Start spindle
     gcode = addLine(gcode, "*LFFFFFF") #White because filming
     gcode = addLine(gcode, "G90G0 X-5Y-5\nG90G0 X0Y0") # Remove backlash
