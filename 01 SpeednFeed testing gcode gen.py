@@ -1,8 +1,8 @@
 #User defined variables
 fileName = 'SNF test.gcode'
 fileFolder = 'Latest'
-cutterDiameter = 5 #mm
-depthOfCut = 1 #mm 
+cutterDiameter = 3.19 #mm
+depthOfCut = 2 #mm 
 plungeSpeed = 250 #mm/min
 
 directionOfCut = "y" #"x" or "y"
@@ -79,7 +79,7 @@ def moveOverTo(trenchNumber, nominalTrenchGap, cutterDiameter):
 #Write GCODE file
 with open(fileName,"w+") as f:
     f.write("*LFFFFFF\n")
-    f.write("M3 S" + str(minSpindleSpeed))
+    f.write("M3 S" + str(minSpindleSpeed) + "\n")
     f.write("G90\nG0X0Z0\n")
     #Loop through feed segments
     for segment in range(numberOfFeedTrenches):
