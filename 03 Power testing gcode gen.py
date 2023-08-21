@@ -10,8 +10,17 @@ trenchLength = 700 #mm
 spindleSpeed = 23000 #RPM
 feed = 6000 #mm/min
 appendSeedToFile = True #True or False
+directionOfCut = "x" #"x" or "y"
+
+def checkForInvert(): #Do the axes need to be swapped
+    if "y" in directionOfCut.lower():
+        return True
+    else:
+        return False
 
 #Calculated variables
+if checkForInvert():
+    fileName = "y " + fileName
 fileName = fileFolder + "/" + fileName
 if appendSeedToFile:    
     fileName = fileName[:len(fileName)-6] + " " + str(spindleSpeed//1000) + "k.gcode"
@@ -61,7 +70,20 @@ with open(fileName,"w+") as f:
 
     gcode = addLine(gcode, "G90G0 Z2") #Lift Z        
     gcode = addLine(gcode, "M5") #Stop spindle
-    f.write(gcode)
+    if checkForInvert():
+        f.close()
+        with open(fileName,"r+") as f:
+            print("Inverting file")
+            contents = f.read()
+            contents = contents.replace('x', 'temp')
+            contents = contents.replace('y', 'X')
+            contents = contents.replace('temp', 'Y')
+            contents = contents.replace('X', 'temp')
+            contents = contents.replace('Y', 'X')
+            contents = contents.replace('temp', 'Y')
+            f.close()
+            with open (fileName,"w") as f:
+                f.write(contents)  
 f.close()
 
 print(fileName + " written")
