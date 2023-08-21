@@ -5,7 +5,7 @@ cutterDiameter = 5 #mm
 depthOfCut = 1 #mm 
 plungeSpeed = 250 #mm/min
 
-direction_of_cut = "y" #"x" or "y"
+directionOfCut = "y" #"x" or "y"
 
 nominalTrenchGap = 5 #mm
 
@@ -25,7 +25,7 @@ appendFeedsToFile = True #True or false
 compensateCutterDiameter = True #True or false
 
 def checkForInvert(): #Do the axes need to be swapped
-    if "y" in direction_of_cut.lower():
+    if "y" in directionOfCut.lower():
         return True
     else:
         return False

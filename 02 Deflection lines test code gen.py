@@ -9,6 +9,7 @@ minFeed = 2000 # mm/min
 maxFeed = 6000 # mm/min
 numberOfFeeds = 3
 safeDistance = 5 #mm
+directionOfCut = "y" #"x" or "y"
 
 #Standard vars
 fileName = 'Def.gcode'
@@ -22,7 +23,15 @@ cutVerificationLine = False # True or False
 appendFeedsToFileName = True # True or false
 trenchesPerFeed = 3
 
+def checkForInvert(): #Do the axes need to be swapped
+    if "y" in directionOfCut.lower():
+        return True
+    else:
+        return False
+
 # Calculated variables
+if checkForInvert():
+    fileName = "y " + fileName
 fileName = fileFolder + "/" + fileName
 if appendFeedsToFileName:    
     fileName = fileName[:len(fileName)-6] + " ø" + str(cutterDiameter) + " " + str(minFeed//1000) + "-" + str(maxFeed//1000) + "k.gcode"
@@ -111,6 +120,20 @@ with open(fileName,"w+") as f:
     gcode = addLine(gcode, "G90G0 Z2") #Lift Z    
     gcode = addLine(gcode, "M5") #Stop spindle
     f.write(gcode)
+    if checkForInvert():
+        f.close()
+        with open(fileName,"r+") as f:
+            print("Inverting file")
+            contents = f.read()
+            contents = contents.replace('x', 'temp')
+            contents = contents.replace('y', 'X')
+            contents = contents.replace('temp', 'Y')
+            contents = contents.replace('X', 'temp')
+            contents = contents.replace('Y', 'X')
+            contents = contents.replace('temp', 'Y')
+            f.close()
+            with open (fileName,"w") as f:
+                f.write(contents)  
 f.close()
 
 print(fileName + " written")
