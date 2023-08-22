@@ -70,6 +70,9 @@ with open(fileName,"w+") as f:
 
     gcode = addLine(gcode, "G90G0 Z2") #Lift Z        
     gcode = addLine(gcode, "M5") #Stop spindle
+
+    f.write(gcode)#write to file
+
     if checkForInvert():
         f.close()
         with open(fileName,"r+") as f:
