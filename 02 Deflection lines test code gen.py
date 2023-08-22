@@ -66,11 +66,11 @@ with open(fileName,"w+") as f:
     gcode = ""
     trench = 1
     #MAIN CUT
-    gcode = addLine(gcode, "*LEA00FF") #Magenta because it's cute
+    gcode = addLine(gcode, "*LEA00FF") #Magenta light
     
     gcode = addLine(gcode, "G90G0 Z" + str(safeDistance)) # Lift Z    
     gcode = addLine(gcode, "M3 S" + str(spindleSpeed)) #Start spindle
-    gcode = addLine(gcode, "*LFFFFFF") #White because filming
+    gcode = addLine(gcode, "*LFFFFFF") #White light for filming
     gcode = addLine(gcode, "G91G0 X-5Y-5\nG90G0 X0Y0") # Remove backlash
     gcode = addLine(gcode, "G90G0 X" + str(cutterDiameter/2)) #Move up to half cutter diameter
     gcode = addLine(gcode, "G90G0 Z-1") # Plunge z
